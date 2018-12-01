@@ -30,7 +30,7 @@ class Karaoke_Bar
   end
 
   def count_money
-    total = @rooms.reduce(0) {| sum, room | sum + room[:float] }
+    total = @rooms.reduce(0) {| sum, room | sum + room.float }
     return total
   end
 

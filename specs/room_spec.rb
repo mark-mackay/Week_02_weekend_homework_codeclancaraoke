@@ -93,13 +93,7 @@ class TestRoom < Minitest::Test
       assert_equal("Whoop! Whoop!, Favourite Song!!!", result)
     end
 
-    #
-    #   p @lobby.get_number_of_guests_in_room
-    #   # @person_1.move_room(@red_room)
-    #   p @red_room.get_number_of_guests_in_room
-    #   p @lobby.get_number_of_guests_in_room
-    #   # @red_room.add_guest(@guests_1)
-    #   # assert_equal()
+
     def test_add_song_to_room
       @blue_room.add_song(@song_2)
       assert_equal(true, @blue_room.song_in_room(@song_2))
@@ -109,9 +103,16 @@ class TestRoom < Minitest::Test
       result = @blue_room.add_song(@song_8)
       assert_equal("Song is already in room.", result)
     end
-    # def test_remove_guest_from_room
-    #
-    # end
+
+    def test_take_request_by_name__song_is_in_room
+        result = @yellow_room.take_request_by_name("Scary monsters and nice sprites")
+        assert_equal("Amazing! we have that song!", result)
+    end
+    def test_take_request_by_name__do_not_have_song
+        result = @yellow_room.take_request_by_name("Blame it on the rain!")
+        assert_equal("We do not have that song!", result)
+    end
+
 
 
 

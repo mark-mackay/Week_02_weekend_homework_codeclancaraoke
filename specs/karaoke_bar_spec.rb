@@ -73,6 +73,15 @@ class TestKaroakeBar < Minitest::Test
       result = @all_bar_one.count_guests
       assert_equal(5, result)
     end
+      def test_count_money
+        result = @all_bar_one.count_money
+        assert_equal(687.54, result)
+        @all_bar_one.add_rooms_to_bar(@blue_room) # Test after adding another room
+        result = @all_bar_one.count_money
+        assert_equal(700.24, result)
+      end
+
+
 
 
 end

@@ -55,7 +55,8 @@ class TestGuest < Minitest::Test
       assert_equal("Whoop! Whoop!, Favourite Song!!!", result)
     end
 
-
+  # def test_guest_can_make_request
+  # end
 
 
 
