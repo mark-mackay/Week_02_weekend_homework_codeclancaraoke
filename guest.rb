@@ -9,25 +9,16 @@ class Guest
     end
 
     def check_money(amount)
+      # Allows guest to verify they have enough money to buy something without revealing value.
       return amount <= wallet
     end
-    def show_money
-      return wallet
-    end
-    def check_fav_song
-      return fav_song
-    end
+
     def take_money(amount)
+       # Deduct amount from wallet for purchase.
        @wallet -= amount if check_money(amount)
     end
     def whoop
+      # Allows customer to express glee when favourite song is played 
       "Whoop! Whoop!, Favourite Song!!!"
     end
-
-
-    # def move_room(room)
-    #   if wallet >= room.cost
-    #     room.try_room
-    #   end
-    # end
 end

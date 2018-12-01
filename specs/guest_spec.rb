@@ -20,43 +20,48 @@ class TestGuest < Minitest::Test
     end
 
     def test_get_guest_name
+      # Check it returns a guest name for a guest
       assert_equal("Mark", @person_1.name)
     end
 
     def test_show_guest_money
+      # Check it returns a true wallet amount for a guest
       assert_equal(23.56, @person_8.wallet)
     end
 
     def test_get_fav_song
+      # Check it returns a true favourite song for a guest
       assert_equal("Battleflag", @person_10.fav_song)
     end
 
     def test_check_money__has_enough
+      # checks guest has enough money
       result = @person_6.check_money(10.78)
       assert_equal(result, true )
     end
     def test_check_money__not_enough
+      # checks person hasn't enough money
       result = @person_2.check_money(10.78)
       assert_equal(result, false )
     end
 
     def test_take_money__enough_funds
+      # checks funds will be taken if they have enough.
       @person_5.take_money(51.26)
       assert_equal(47.72, @person_5.wallet.round(2)) # Had to change this to round as returned 47.720000000000006, why??????
     end
     def test_take_money__not_enough_funds
-      # Should only take money if enough funds otherwise no...
+      # checks funds will not be taken if they don't have enough.
       @person_5.take_money(102.26)
       assert_equal(1.50, @person_7.wallet)
     end
 
     def test_guest_can_whoop
+      # Checks person can whoop
       result = @person_5.whoop
       assert_equal("Whoop! Whoop!, Favourite Song!!!", result)
     end
 
-  # def test_guest_can_make_request
-  # end
 
 
 

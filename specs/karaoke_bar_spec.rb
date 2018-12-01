@@ -51,35 +51,41 @@ class TestKaroakeBar < Minitest::Test
     end
 
     def test_get_bar_name
+      # Checks bar has been allocated a name...
       assert_equal("CodeClan Caraoke", @bar.name)
     end
 
     def test_get_number_of_rooms
+      # Test that it returns correct number of rooms in bar
       assert_equal(2, @bar.count_bar_rooms)
     end
 
     def test_add_rooms_to_bar
+      # checks it returns correct number of rooms in bar after adding
       @bar.add_rooms_to_bar(@purple_room)
       assert_equal(3, @bar.count_bar_rooms)
     end
 
     def test_add_guest_to_bar
+      # checks we can add a guest to the bar 
       @all_bar_one.add_guest_to_bar(@person_1)
       result = @all_bar_one.count_guests
       assert_equal(7, result)
     end
     def test_delete_guest_from_bar
+      # checks we can delete a guest from the bar
       @all_bar_one.delete_guest_from_bar(@person_6)
       result = @all_bar_one.count_guests
       assert_equal(5, result)
     end
-      def test_count_money
-        result = @all_bar_one.count_money
-        assert_equal(687.54, result)
-        @all_bar_one.add_rooms_to_bar(@blue_room) # Test after adding another room
-        result = @all_bar_one.count_money
-        assert_equal(700.24, result)
-      end
+    def test_count_money
+      # checks we can count all the money in the various rooms
+      result = @all_bar_one.count_money
+      assert_equal(687.54, result)
+      @all_bar_one.add_rooms_to_bar(@blue_room) # Test after adding another room
+      result = @all_bar_one.count_money
+      assert_equal(700.24, result)
+    end
 
 
 

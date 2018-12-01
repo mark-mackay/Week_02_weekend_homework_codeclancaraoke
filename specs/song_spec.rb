@@ -19,9 +19,11 @@ class TestSong < Minitest::Test
     end
 
     def test_get_song_name
+      # Checks song has a name
       assert_equal("What's the story", @song_1.name)
     end
     def test_get_song_artist
+      # Checks song artist.
       assert_equal("Queen", @song_8.artist)
     end
 
