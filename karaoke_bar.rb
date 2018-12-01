@@ -15,14 +15,17 @@ class Karaoke_Bar
   def count_bar_rooms
     return @rooms.length
   end
+  def count_guests
+    return @guests.length
+  end
 
   def add_rooms_to_bar(car_rooms)
     @rooms << car_rooms
   end
-  def add_people_to_bar(car_people)
+  def add_guest_to_bar(car_people)
     @guests << car_people
   end
-  def remove_people_from_bar(car_people)
+  def delete_guest_from_bar(car_people)
     @guests.delete(car_people)
   end
 
