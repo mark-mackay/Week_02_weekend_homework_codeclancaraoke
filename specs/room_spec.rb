@@ -60,6 +60,7 @@ class TestRoom < Minitest::Test
       assert_equal(4.50, @blue_room.cost)
     end
     def test_add_guest_to_room__room_has_guests
+      # Tests adding a guest to a room with guests 
         @red_room.add_guest(@person_1)
         assert_equal(26.36, @person_1.wallet) # Make sure funds have been taken
         assert_equal(3.50, @red_room.float) # Make sure funds have gone to room float
@@ -76,8 +77,10 @@ class TestRoom < Minitest::Test
     end
 
     def test_adding_guest_to_room_room_at_capactity
-      @green_room.add_guest(@person_1)
+      # Tests that nobody can be added to the room when it is at capacity.
+      result = @green_room.add_guest(@person_1)
       assert_equal(5, @green_room.get_number_of_guests_in_room) # 5 if guest has not been added.
+      assert_equal("Room is full!", result) # Checks message is returned.
     end
 
 
@@ -119,15 +122,18 @@ class TestRoom < Minitest::Test
     end
 
     def test_add_song_to_room__song_already_there
+      # Tests adding a song when song is already in room.
       result = @blue_room.add_song(@song_8)
       assert_equal("Song is already in room.", result)
     end
 
     def test_take_request_by_name__song_is_in_room
+        # Checks the song is in the room by name when the song is there.
         result = @yellow_room.take_request_by_name("Scary monsters and nice sprites")
         assert_equal("Amazing! we have that song!", result)
     end
     def test_take_request_by_name__do_not_have_song
+      # Checks the song is in the room by name when the song isn't there.
         result = @yellow_room.take_request_by_name("Blame it on the rain!")
         assert_equal("We do not have that song!", result)
     end

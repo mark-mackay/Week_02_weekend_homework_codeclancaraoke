@@ -30,6 +30,7 @@ class Karaoke_Bar
   end
 
   def count_money
+    # Gives the total amount of money in all rooms in the bar 
     total = @rooms.reduce(0) {| sum, room | sum + room.float }
     return total
   end
