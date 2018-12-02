@@ -1,8 +1,8 @@
 class Room
-  attr_reader :name, :capacity, :float, :cost, :was_in_room
+  attr_reader :name, :capacity, :float, :cost, :was_in_room, :drinks
   attr_accessor :songs, :guests
 
-  def initialize(name, cost, guests = [],songs = [], capacity = 7, float = 0.0 )
+  def initialize(name, cost, guests = [],songs = [], capacity = 7, float = 0.0, drinks = [] )
     @name = name
     @guests = guests
     @cost = cost
@@ -10,6 +10,7 @@ class Room
     @float = float
     @capacity = capacity
     @was_in_room = guests.map {|guest| guest.name }
+    @drinks = drinks
   end
 
   def get_number_of_guests_in_room
@@ -38,6 +39,20 @@ class Room
     else
       return "Guest is already in room or doesn't have enough funds."
     end
+  end
+  def serve_drink(guest, beverage)
+    # Guest buys a drink if they have the funds
+      drink_hash = @drinks.find { |drink| drink.name == beverage }
+       if !drink_hash.nil?
+        if guest.check_money(drink_hash.price)
+          guest.take_money(drink_hash.price)
+          @float += drink_hash.price
+        else
+          return "Guest doesn't have enough funds."
+        end
+      else
+        return "Drink is not in bar"
+      end 
   end
   def remove_guest(guest)
     guests.delete(guest) if guest_in_room(guest)

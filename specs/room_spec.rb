@@ -3,10 +3,17 @@ require('minitest/rg')
 require_relative('../room')
 require_relative('../song')
 require_relative('../guest')
+require_relative('../drink')
 
 class TestRoom < Minitest::Test
 # room specs (name, cost, guests = [{:guest => "", :spending => 0.0}],songs = [], capacity = 10, float = 0.0 )
     def setup
+      # Stolen from drink solution!
+      @drink1 = Drink.new("beer", 2.0, 5)
+      @drink2 = Drink.new("wine", 3.0, 10)
+      @drink3 = Drink.new("gin", 4.0, 30)
+      @drinks = [@drink1, @drink2, @drink3]
+      # End of stolen bit!
       @person_1 = Guest.new(name: "Mark", wallet: 29.86, fav_song: "Rock You" )
       @person_2 = Guest.new(name: "Tracy", wallet: 3.60, fav_song: "Secret Smile" )
       @person_3 = Guest.new(name: "Katie", wallet: 100.50, fav_song: "Coming in the air tonight" )
@@ -39,7 +46,7 @@ class TestRoom < Minitest::Test
       @lobby = Room.new("Lobby", 0.0,  @people, [], 500, 0.0)
       @red_room =  Room.new("Red Room", 3.50, @guests_1, @album_1, 5, 0.0)
       @blue_room = Room.new("Blue Room", 4.50, @guests_2, @album_2, 5, 0.0)
-      @green_room = Room.new("Green Room", 2.50, @guests_3, @album_1, 5, 0.0)
+      @green_room = Room.new("Green Room", 2.50, @guests_3, @album_1, 5, 0.0, @drinks)
       @yellow_room = Room.new("Yellow Room", 3.00, @guests_4, @album_2, 5, 0.0)
       @orange_room = Room.new("Orange Room", 5.50, @guests_2, @album_1, 5, 0.0)
     end
@@ -113,6 +120,24 @@ class TestRoom < Minitest::Test
         assert_equal("We do not have that song!", result)
     end
 
+    def test_customer_can_buy_drink__enough_funds
+      # Tests funds are taken after serving guest a drink
+      @green_room.serve_drink(@person_3, "gin")
+      assert_equal(96.50, @person_3.wallet)
+    end
+
+    def test_customer_can_buy_drink__not_enough_funds
+      # returns a message if customer doesn't have enough funds.
+      result = @green_room.serve_drink(@person_7, "gin")
+      assert_equal("Guest doesn't have enough funds.", result)
+      assert_equal(1.50, @person_7.wallet)
+    end
+    def test_customer_can_buy_drink__drink_doesnt_exist
+      # Tests no funds are taken if drink doesn't exist
+      result = @green_room.serve_drink(@person_3, "absynth")
+      assert_equal(100.50, @person_3.wallet)
+      assert_equal("Drink is not in bar", result)
+    end
 
 
 
