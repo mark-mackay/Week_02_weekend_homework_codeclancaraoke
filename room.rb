@@ -22,6 +22,9 @@ class Room
     # Returns true if guest is in room
     return @guests.include?(guest)
   end
+  def room_has_space
+    return @guests.length < @capacity
+  end
 
   def list_includes_favourite(guest)
     # returns true if favourite song is in room
@@ -31,13 +34,17 @@ class Room
 
   def add_guest(guest)
     # adds guest to room, it they are not already in there and they have the fee
-    if !guest_in_room(guest) && guest.check_money(@cost)
-      @guests << guest
-      guest.take_money(@cost)
-      @float += @cost
-      guest.whoop if list_includes_favourite(guest)
+    if room_has_space
+      if !guest_in_room(guest) && guest.check_money(@cost)
+        @guests << guest
+        guest.take_money(@cost)
+        @float += @cost
+        guest.whoop if list_includes_favourite(guest)
+      else
+        return "Guest is already in room or doesn't have enough funds."
+      end
     else
-      return "Guest is already in room or doesn't have enough funds."
+      return "Room is full!"
     end
   end
   def serve_drink(guest, beverage)
@@ -52,7 +59,7 @@ class Room
         end
       else
         return "Drink is not in bar"
-      end 
+      end
   end
   def remove_guest(guest)
     guests.delete(guest) if guest_in_room(guest)

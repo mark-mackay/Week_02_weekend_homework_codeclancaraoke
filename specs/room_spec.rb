@@ -6,7 +6,7 @@ require_relative('../guest')
 require_relative('../drink')
 
 class TestRoom < Minitest::Test
-# room specs (name, cost, guests = [{:guest => "", :spending => 0.0}],songs = [], capacity = 10, float = 0.0 )
+# room specs (name, cost, guests = [{:guest => "", :spending => 0.0}],songs = [], capacity = 10, float = 0.0, drinks = [] )
     def setup
       # Stolen from drink solution!
       @drink1 = Drink.new("beer", 2.0, 5)
@@ -67,41 +67,53 @@ class TestRoom < Minitest::Test
     end
 
     def test_add_guest_to_room__room_has_guest_already
+      # Tests adding a person to the room when they are already there.
         result = @red_room.add_guest(@person_8)
-        assert_equal(23.56, @person_8.wallet) # Make sure funds have been taken
-        assert_equal(0.00, @red_room.float) # Make sure funds have gone to room float
+        assert_equal(23.56, @person_8.wallet) # Make sure funds have not been taken
+        assert_equal(0.00, @red_room.float) # Make sure funds have not gone to room float
         assert_equal(2, @red_room.get_number_of_guests_in_room)  # Check number of guests
         assert_equal("Guest is already in room or doesn't have enough funds.", result)
     end
 
+    def test_adding_guest_to_room_room_at_capactity
+      @green_room.add_guest(@person_1)
+      assert_equal(5, @green_room.get_number_of_guests_in_room) # 5 if guest has not been added.
+    end
+
 
     def test_if_guest_in_room__person_there
+      # Tests if a person is in the room when they are there
             result = @red_room.guest_in_room(@person_8)
             assert_equal(true, result)
     end
 
     def test_if_guest_in_room__not_there
+      # Tests if a person is in the room when they are not there
             result = @red_room.guest_in_room(@person_2)
             assert_equal(false, result)
     end
 
     def test_remove_person_from_room__person_there
+      # Tests removing a person from the room who is there.
         @red_room.remove_guest(@person_8)
         assert_equal(1, @red_room.get_number_of_guests_in_room)
     end
 
     def test_remove_person_from_room__person_not_there
+      # Tests removing a person from the room who isn't there.
         @red_room.remove_guest(@person_1)
         assert_equal(2, @red_room.get_number_of_guests_in_room)
     end
 
     def test_room_includes_favourite_song
+      # Tests adding a guest to the room
       result = @blue_room.add_guest(@person_1)
       assert_equal("Whoop! Whoop!, Favourite Song!!!", result)
     end
 
 
     def test_add_song_to_room
+      # Tests adding a song to the room
       @blue_room.add_song(@song_2)
       assert_equal(true, @blue_room.song_in_room(@song_2))
     end
@@ -138,7 +150,4 @@ class TestRoom < Minitest::Test
       assert_equal(100.50, @person_3.wallet)
       assert_equal("Drink is not in bar", result)
     end
-
-
-
 end
